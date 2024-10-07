@@ -7,7 +7,15 @@ import AppText from './AppText';
 import Screen from './Screen';
 import PickerItem from './PickerItem';
 
-function AppPicker({ icon, placeholder, numberOfColumns, onSelectItem, items,PickerItemComponent={PickerItem}, selectedItem }) {
+function AppPicker({ 
+    icon, 
+    placeholder, 
+    numberOfColumns = 1, 
+    onSelectItem, 
+    items, 
+    PickerItemComponent = PickerItem,  // Removed unnecessary {}
+    selectedItem 
+}) {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
@@ -43,7 +51,7 @@ function AppPicker({ icon, placeholder, numberOfColumns, onSelectItem, items,Pic
                                 label={item.label}
                                 onPress={() => {
                                     setModalVisible(false);
-                                    onSelectItem(item); // Ensure this is correctly set in AppFormPicker
+                                    onSelectItem(item); 
                                 }}
                             />
                         )}
