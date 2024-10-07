@@ -8,8 +8,8 @@ import ListItemDeleteAction from '../components/ListItemDeleteAction';
 const initialMessages = [
     {
         id: 1,
-        title: 'T1',
-        description: 'D1',
+        title:'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+        description: 'Ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
         image: require('../assets/kikooo.jpg'),
     },
     {

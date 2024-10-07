@@ -5,14 +5,13 @@ import colors from '../config/colors';
 import defaultStyles from '../config/styles';
 import AppText from './AppText';
 import Screen from './Screen';
-
 import PickerItem from './PickerItem';
 
-function AppPicker({ icon, placeholder, onSelectItem, items, selectedItem }) {
+function AppPicker({ icon, placeholder, numberOfColumns, onSelectItem, items,PickerItemComponent={PickerItem}, selectedItem }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <React.Fragment>
+        <>
             <Pressable onPress={() => setModalVisible(true)}>
                 <View style={styles.container}>
                     {icon && (
@@ -34,24 +33,24 @@ function AppPicker({ icon, placeholder, onSelectItem, items, selectedItem }) {
             <Modal visible={modalVisible} animationType="slide">
                 <Screen>
                     <Button title="Close" onPress={() => setModalVisible(false)} />
-                        <FlatList
-                            data={items}
-                            keyExtractor={(item) => item.value.toString()}
-                            renderItem={({ item }) =>
-                                <PickerItem
-                                    label={item.label}
-                                    onPress={() =>{
-                                        setModalVisible(false);
-                                        onSelectItem(item);
-                                    } }
-                                />
-                            
-                            }
-                        />
+                    <FlatList
+                        data={items}
+                        keyExtractor={(item) => item.value.toString()}
+                        numColumns={numberOfColumns}
+                        renderItem={({ item }) => (
+                            <PickerItemComponent
+                                item={item}
+                                label={item.label}
+                                onPress={() => {
+                                    setModalVisible(false);
+                                    onSelectItem(item); // Ensure this is correctly set in AppFormPicker
+                                }}
+                            />
+                        )}
+                    />
                 </Screen>
-                
             </Modal>
-        </React.Fragment>
+        </>
     );
 }
 

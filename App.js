@@ -19,6 +19,7 @@ import ListingsScreen from './app/sceens/ListingsScreen';
 import AppTextInput from './app/components/AppTextInput';
 import AppPicker from './app/components/AppPicker';
 import LoginScreen from './app/sceens/LoginScreen';
+import ListingEditScreen from './app/sceens/ListingEditScreen';
 
 
 
@@ -27,7 +28,7 @@ export default function App() {
   
 
   return (
-    <LoginScreen/>
+    <ListingEditScreen/>
   );
 }
 
