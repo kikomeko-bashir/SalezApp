@@ -1,35 +1,33 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Image,
-  TextInput,
-  Text,
-  Switch, 
-} from 'react-native';  // Import all components from react-native
-import WelcomeScreen from './app/sceens/WelcomeScreen';
-import ViewImageScreen from './app/sceens/ViewImageScreen';
-import Card from './app/components/Card';
-import ListingDetailsScreen from './app/sceens/ListingDetailsScreen';
-import MessageScreen from './app/sceens/MessagesScreen';
+import React, { useEffect, useState } from 'react';
 import Screen from './app/components/Screen';
-import Icon from './app/components/Icon';
-import ListItem from './app/components/ListItem';
-import AccountScreen from './app/sceens/AccountScreen';
-import ListingsScreen from './app/sceens/ListingsScreen';
-import AppTextInput from './app/components/AppTextInput';
-import AppPicker from './app/components/AppPicker';
-import LoginScreen from './app/sceens/LoginScreen';
-import ListingEditScreen from './app/sceens/ListingEditScreen';
-
-
+import * as ImagePicker from 'expo-image-picker';
+import { Button } from 'react-native';
+import { Image } from 'react-native';
+import ImageInput from './app/components/ImageInput';
+import ImageInputList from './app/components/ImageInputList';
 
 export default function App() {
+  const [imageUris, setImageUris] = useState([]);
+
+  const handleAdd = uri => {
+    setImageUris([...imageUris, uri]);
+  }
+
+  const handleRemove = uri => {
+    setImageUris(imageUris.filter(imageUri=>imageUri !== uri))
+  }
   
+
   
 
   return (
-    <ListingEditScreen/>
+    <Screen>
+      <ImageInputList 
+        imageUris={imageUris}
+        onAddImage={handleAdd}
+        onRemoveImage={handleRemove}
+
+      />
+    </Screen>
   );
 }
-
-
