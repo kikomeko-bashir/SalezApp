@@ -1,33 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import Screen from './app/components/Screen';
-import * as ImagePicker from 'expo-image-picker';
+import React from 'react';
+import { Text } from 'react-native';
+import Screen from "./app/components/Screen";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
 import { Button } from 'react-native';
-import { Image } from 'react-native';
-import ImageInput from './app/components/ImageInput';
-import ImageInputList from './app/components/ImageInputList';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AuthNavigator from './app/navigation/AuthNavigator';
+import AppNavigator from './app/navigation/AppNavigator';
+import navigationTheme from './app/navigation/navigationTheme';
+
+// Define screen components
+const Tweets = ({ navigation }) => (
+  <Screen >
+    <Text>Tweets Screen</Text>
+    <Button 
+      title='View Tweet'
+      onPress={() => navigation.navigate("TweetDetails", { id: 1})}  
+    />
+  </Screen>
+);
+
+const TweetDetails = ({ route }) => (  
+  <Screen>
+    <Text>Tweet Details Screen {route.params.id} </Text>
+  </Screen>
+);
+
+const Account = () => (  // Fixed typo here
+  <Screen>
+    <Text>Account Screen</Text>
+  </Screen>
+);
+
+// Create stack navigator
+const Stack = createStackNavigator();
+
+const StackNavigator = () => ( 
+  <Stack.Navigator 
+    screenOptions={{
+      headerStyle: { backgroundColor: "dodgerblue"},
+      headerTintColor: "white"
+    }}
+  >
+    <Stack.Screen 
+      name="Tweets" 
+      component={Tweets} 
+    />
+    <Stack.Screen 
+      name="TweetDetails" 
+      component={TweetDetails} 
+      options={({ route }) => ({ title: route.params.id })} 
+    />
+  </Stack.Navigator>
+);
+
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => {
+  return (  // Added return statement
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveBackgroundColor: "tomato",
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "black",
+        tabBarInactiveBackgroundColor: "#eee",
+        tabBarStyle: { backgroundColor: "white" },
+      }}
+    >
+      <Tab.Screen 
+        name="Tweets" 
+        component={StackNavigator} 
+        options={{
+          tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="home" size={size} color={color} />,
+          headerShown: false,  // Hide header when inside TabNavigator
+        }}
+      />
+      <Tab.Screen 
+        name="Account" 
+        component={Account} 
+        options={{
+          tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="account" size={size} color={color} />
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
-  const [imageUris, setImageUris] = useState([]);
-
-  const handleAdd = uri => {
-    setImageUris([...imageUris, uri]);
-  }
-
-  const handleRemove = uri => {
-    setImageUris(imageUris.filter(imageUri=>imageUri !== uri))
-  }
-  
-
-  
-
   return (
-    <Screen>
-      <ImageInputList 
-        imageUris={imageUris}
-        onAddImage={handleAdd}
-        onRemoveImage={handleRemove}
-
-      />
-    </Screen>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+    <NavigationContainer theme={ navigationTheme }>
+      <AppNavigator/>
+      
+    </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

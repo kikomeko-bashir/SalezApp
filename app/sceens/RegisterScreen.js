@@ -35,6 +35,16 @@ function LoginScreen(props) {
                 <AppFormField
                     autoCapitalize="none"
                     autoCorrect={false}
+                    icon="email"
+                    keyboardType="email-address"
+                    name="email"
+                    placeholder="Email"
+                    textContentType="emailAddress"
+                />
+
+                <AppFormField
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     icon="lock"
                     name="password"
                     placeholder="Password"
@@ -51,7 +61,7 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        paddingTop: 40,
+        paddingTop: 20,
     },
     logo: {
         width: 80,
