@@ -59,33 +59,7 @@ const StackNavigator = () => (
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  return (  // Added return statement
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveBackgroundColor: "tomato",
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "black",
-        tabBarInactiveBackgroundColor: "#eee",
-        tabBarStyle: { backgroundColor: "white" },
-      }}
-    >
-      <Tab.Screen 
-        name="Tweets" 
-        component={StackNavigator} 
-        options={{
-          tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="home" size={size} color={color} />,
-          headerShown: false,  // Hide header when inside TabNavigator
-        }}
-      />
-      <Tab.Screen 
-        name="Account" 
-        component={Account} 
-        options={{
-          tabBarIcon: ({ size, color }) => <MaterialCommunityIcons name="account" size={size} color={color} />
-        }}
-      />
-    </Tab.Navigator>
-  );
+  
 }
 
 export default function App() {
