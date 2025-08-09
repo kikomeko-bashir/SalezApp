@@ -22,19 +22,21 @@ function ImageInput({ imageUri, onChangeImage }) {
         ])
     }
     const selectImage = async () => {
-        try {
-          const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 0.5,
-          });
-    
-          if (!result.canceled) {
-            onChangeImage(result.assets[0].uri); 
-          }
-        } catch (error) {
-          console.log('Error reading an image', error);
+      try {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: 'Images', // Simplified - just use string instead of constant
+          quality: 0.5,
+          allowsEditing: true, // Allow basic editing
+          aspect: [1, 1], // Square aspect ratio
+        });
+  
+        if (!result.canceled) {
+          onChangeImage(result.assets[0].uri); 
         }
-      };
+      } catch (error) {
+        console.log('Error reading an image', error);
+      }
+    };
     return (
         <TouchableWithoutFeedback onPress = {handlePress}>
             <View style={styles.container}>

@@ -1,10 +1,14 @@
+// app/sceens/AccountScreen.js
+// Updated account screen with logout functionality
+
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, Alert } from 'react-native';
 import Screen from '../components/Screen';
 import ListItem from '../components/ListItem';
 import Icon from '../components/Icon';
 import colors from '../config/colors';
 import ListItemSeparator from '../components/ListItemSeparator';
+import { useAuth } from '../context/AuthContext';
 
 const menuItems = [
   {
@@ -24,17 +28,51 @@ const menuItems = [
   },
 ];
 
-function AccountScreen({navigation}) {
+function AccountScreen({ navigation }) {
+  // Get user data and logout function from auth context
+  const { user, logout, isLoading } = useAuth();
+
+  /**
+   * Handle logout with confirmation
+   */
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await logout();
+              // Navigation will be handled automatically by App.js
+              // when authentication state changes
+            } catch (error) {
+              Alert.alert('Error', 'Failed to logout. Please try again.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <Screen style={styles.screen}>
+      {/* User Profile Section */}
       <View style={styles.container}>
         <ListItem
-          title="Kikomeko Bashir"
-          subTitle="kikomekobashir29@gmail.com"
+          title={user?.name || 'User Name'}
+          subTitle={user?.email || 'user@example.com'}
           image={require('../assets/kikooo.jpg')}
         />
       </View>
 
+      {/* Menu Items */}
       <View style={styles.container}>
         <FlatList
           data={menuItems}
@@ -55,12 +93,27 @@ function AccountScreen({navigation}) {
         />
       </View>
 
+      {/* Logout Button */}
       <ListItem
         title="Log Out"
         IconComponent={
           <Icon name="logout" backgroundColor="#ffe66d" />
         }
+        onPress={handleLogout}
       />
+
+      {/* Development Info */}
+      {__DEV__ && (
+        <View style={styles.devInfo}>
+          <ListItem
+            title="User ID"
+            subTitle={user?.id || 'Not available'}
+            IconComponent={
+              <Icon name="account-details" backgroundColor={colors.medium} />
+            }
+          />
+        </View>
+      )}
     </Screen>
   );
 }
@@ -71,6 +124,10 @@ const styles = StyleSheet.create({
   },
   screen: {
     backgroundColor: colors.light,
+  },
+  devInfo: {
+    marginTop: 20,
+    opacity: 0.7,
   },
 });
 
